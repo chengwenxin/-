@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>多层块级元素margin设置探索</title>
+		<style>
+			初步结论:
+			1.margin作用的范围是相对于临近的兄弟元素,当没有兄弟元素时,则是相对于
+			  父级的兄弟元素
+			html,*{
+				margin: 0;
+				padding: 0;
+			}
+			.div1{
+					/*margin-top: 100px;*/
+
+					
+			}
+			.div2{
+					/*margin-top: 100px;*/
+
+					
+			}
+			.div3{
+				background:blue;
+				width:100px;
+				height: 100px;
+				margin-top: 100px;	
+			}
+			.div4{
+				background:red;
+				width:100px;
+				height: 100px;
+				/*margin-top: 100px;*/
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div class="div1">
+			<div class="div4">
+				
+			</div>
+			<div class="div2">
+				<div class="div3">
+					多层块级元素margin设置探索
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

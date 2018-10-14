@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>三栏布局五种解决方案</title>
+	
+		<style>
+			/*1.float  absolute 会脱离文档流
+			2.flex table 会压缩固定宽度
+			3.grid 会保持固定宽度
+			4.scrollWidth表示content+padding的值（包括溢出的content）
+			5.clientWidth表示可视的区域，和scrollWidth类似，只是不包括溢出的内容
+			6.offsetHeight = clientHeight + 滚动条 + 边框。范围最大，会随浏览器窗口大小变化
+			* */
+			html,*{
+				margin: 0;
+				padding: 0;
+			}
+			div{
+				margin-top: 10px;
+				/*white-space: nowrap;*/
+			}
+           .left{
+           	background-color: chartreuse;
+           	width:300px;
+           	height:100px;
+           }
+           .right{
+           	background-color: chartreuse;  
+           	width:300px;
+           	height: 100px;
+           }
+           .center{
+           	background-color:blue;
+           	height: 100px;
+           }
+           
+           /*.float-left,.float-right{
+           	margin: 0;
+           }*/
+           .float-left{
+           	float: left;
+           }
+           .float-right{
+           	float: right;
+           }
+           
+           .position-left{
+           	position:absolute;
+           	left: 0;
+           }
+           .position-right{
+           	position:absolute;
+           	right: 0;
+           }
+           .position-center{
+           	position: absolute;
+           	left: 300px;
+           	right:300px;
+           }
+           
+           .flex-div{
+           	  margin-top: 120px;
+           	  display: flex;
+           	  flex-direction: row;
+           	  justify-content: flex-start;
+           }
+           .flex-left{
+                	
+           }
+           .flex-center{
+           	   flex:1;
+           }
+           .flex-right{
+           	
+           }
+           
+           .table-div{
+           	  display: table;
+           	  width: 100%;
+           }
+           .table.left,.table.right,.table.center{
+           	 display: table-cell;
+           }
+           .table.left{
+           	  /*text-align: left;*/
+           }
+             
+           .table.right{
+           	  /*text-align: right;*/
+           }           
+           
+           .layout.grid{
+           	display: grid;
+           	width: 100%;
+           	grid-template-rows: 100px ;
+           	grid-template-columns:300px auto 300px;
+           }
+           #h1{
+           	width: 100px;height: 100px;
+           }
+           
+		</style>
+	</head>
+
+	<body>
+		<!--浮动方案
+			1.左右侧边栏自带有margin-top值，为何会有这个？
+			  因为父级div 设置了margin-top值，但是center却不受影响
+		-->
+		
+		<div>
+			<div class="left float-left">float-left</div>
+			<div class="right float-right">float-right</div>
+            <div class="center float-center">float-center</div>
+
+		</div>
+
+		<!--绝对定位方案-->
+		<div style="clear: both;position: relative;">
+			<section class="left position-left">position-left</section>
+			<section class="right position-right">position-right</section>
+			<section class="center position-center">position-center</section>
+			
+		</div>
+
+		<!--弹性布局方案-->
+		<div class="flex-div">
+			<div class="left flex-left" id="flex-left" >flex-left</div>
+			<div class="center flex-center">flex-center</div>
+			<div class="left flex-right" >flex-right</div>
+		</div>
+
+		<!--表格布局方案
+			1.viewport缩小时，和flex-box的表现一致，左、右侧栏虽然设置的是300px,
+			      但是会根据实际的viewport进行等比例缩小，同时不会导致content变形 
+		-->
+		<div class="table-div">
+			<div class="left table">table left</div>
+			<div class="center table">table center</div>
+			<div class="right  table">table right</div>
+		</div>
+
+		<!--网格布局方案
+			1.当viewport缩小时，grid方案中左边栏和右边栏是固定大小的，
+			     也就是说它们的大小不会改变，而是会导致出现横向的scroll
+			2.
+		-->
+		<div class="layout grid">
+			<div class="left grid" id="grid-left">left grid</div>
+			<div class="center grid">center grid</div>
+			<div class="right grid" >right grid</div>
+		</div>
+		<!--document.getElementById("h1").style只能获取内联样式，
+		不能获取选择题的样式（即<style></style>)  不理解-->
+		<div id="h1" ></div>
+        <script>
+            window.onresize=function(e){
+            	console.log(document.getElementById("flex-left").scrollWidth)
+            	console.log(document.getElementById("grid-left").scrollWidth)
+//             
+            }
+        </script>
+	</body>
+
+</html>
